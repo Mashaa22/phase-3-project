@@ -13,4 +13,6 @@ end
 
 use Rack::JSONBodyParser
 
+use CommentsController
+use MoviesController
 run ApplicationController
