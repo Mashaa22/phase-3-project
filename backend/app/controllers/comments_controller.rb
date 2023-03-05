@@ -1,58 +1,40 @@
-class CommentsController < Sinatra::Base
+class CommentsController < ApplicationController
 
-
-# POST /movies/:movie_id/comments
-# Create a new comment for a movie
-post '/movies/:movie_id/comments' do
-  content_type :json
-  movie = Movie.find_by(id: params[:movie_id])
-
-  if movie
-    comment = Comment.new(body: params[:body], movie_id: movie.id)
-
-    if comment.save
-      status 201
-      comment.to_json
-    else
-      status 400
-      comment.errors.to_json
-    end
-  else
-    status 404
-  end
+get "/comments" do
+    comments = Comment.all
+    comments.to_json
 end
 
-# PUT /movies/:movie_id/comments/:id
-# Update a comment for a movie
-put '/movies/:movie_id/comments/:id' do
-  content_type :json
-  comment = Comment.find_by(id: params[:id], movie_id: params[:movie_id])
-
-  if comment
-    comment.body = params[:body] if params[:body]
-
-    if comment.save
-      comment.to_json
-    else
-      status 400
-      comment.errors.to_json
-    end
-  else
-    status 404
-  end
+delete "/comments/:id" do
+    count_comments = Comment.where(id: params[:id]).count()
+        if count_comments>0
+            comment = Comment.find(params[:id])
+            comment.destroy
+            message = {:success => "comment deleted"}
+            message.to_json
+        else
+            message = {:error => "comment does not exist"}
+            message.to_json
+        end
 end
 
-# DELETE /movies/:movie_id/comments/:id
-# Delete a comment for a movie
-delete '/movies/:movie_id/comments/:id' do
-  content_type :json
-  comment = Comment.find_by(id: params[:id], movie_id: params[:movie_id])
+post "/comments" do 
+    comment = params[:comment]
+    movie = params[:movie_id]
 
-  if comment
-    comment.destroy
-    status 204
-  else
-    status 404
-  end
+    if (comment.present? && movie.present?)
+        comment = Comment.create(comment: comment, movie_id: movie)
+        if comment
+            message = {:success => "comment created success"}
+            message.to_json
+        else
+            message = {:error => "error saving comment"}
+            message.to_json
+        end
+    else
+        message = {:error => "fill all fields"}
+        message.to_json
+    end
+
 end
 end

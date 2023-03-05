@@ -1,6 +1,8 @@
-class MoviesController < Sinatra::Base
-
-
+class MoviesController < ApplicationController
+   get "movies" do
+    movies = Movie.all
+    movies.to_json
+   end
 
 # GET /movies
 # Get a list of all movies

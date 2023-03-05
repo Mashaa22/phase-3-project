@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2023_03_04_212055) do
 
   create_table "comments", force: :cascade do |t|
-    t.text "content"
+    t.text "comment"
     t.integer "movie_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -31,4 +31,5 @@ ActiveRecord::Schema.define(version: 2023_03_04_212055) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "comments", "movies"
 end
