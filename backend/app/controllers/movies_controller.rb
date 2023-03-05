@@ -1,11 +1,5 @@
 class MoviesController < ApplicationController
-#    get "movies" do
-#     movies = Movie.all
-#     movies.to_json(include [:comments])
 
-#     movies = Movie.includes(:comments)
-#     render json: movies.to_json(include: :comments)
-#    end
 
    get '/movies' do
     content_type :json

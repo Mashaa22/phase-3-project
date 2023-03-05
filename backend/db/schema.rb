@@ -15,8 +15,6 @@ ActiveRecord::Schema.define(version: 2023_03_04_212055) do
   create_table "comments", force: :cascade do |t|
     t.text "comment"
     t.integer "movie_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["movie_id"], name: "index_comments_on_movie_id"
   end
 
@@ -31,5 +29,6 @@ ActiveRecord::Schema.define(version: 2023_03_04_212055) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "comments", "movies"
   add_foreign_key "comments", "movies"
 end
