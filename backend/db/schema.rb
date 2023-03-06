@@ -29,6 +29,5 @@ ActiveRecord::Schema.define(version: 2023_03_04_212055) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "comments", "movies"
-  add_foreign_key "comments", "movies"
+  add_foreign_key "comments", "movies", on_delete: :cascade
 end

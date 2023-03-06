@@ -20,6 +20,24 @@ function Home() {
     setMovies([...movies, movie])
   }
 
+  
+const handleDeleteMovie = (movieId) => {
+    fetch(`http://127.0.0.1:9290/movies/${movieId}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      console.log('response', response);
+      return response.json();
+    })
+    .then(data => {
+      console.log('data', data);
+        setMovies(movies.filter(movie => movie.id !== movieId))
+        window.location.reload();
+
+
+    })
+    .catch(error => console.error(error))
+  }
   return (
     <div>
       <h1>Movies {movies.length}</h1>
@@ -30,7 +48,7 @@ function Home() {
               <p>Loading movies...</p>
             ) : (
               movies.map((movie) => (
-                <Movie movie={movie} key={movie.id} />
+                <Movie movie={movie} key={movie.id} onDeleteMovie={handleDeleteMovie} />
               ))
             )}
           </div>
@@ -43,5 +61,4 @@ function Home() {
   )
 }
 
-export default Home
-
+export default Home;
